@@ -1,0 +1,404 @@
+// imports
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+// reset
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+// colors
+$primary-color: rgba(115,0,255,1);
+$secondary-color: rgba(9,9,56,1);
+$light: rgba(255, 255, 255, 1);
+$dark: rgba(0, 0, 0, 1);
+$star-light: rgba(253, 173, 23, 1);
+$dark-theme-bg: rgba(66, 66, 66, 1);
+
+// img
+$imgWidth: 270px;
+
+// mixins
+@mixin flexRow {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+@mixin flexColumn {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+// styles
+header {
+    background: rgb(9,9,56);
+    background: linear-gradient(90deg, rgba(9,9,56,1) 0%, rgba(115,0,255,1) 100%);
+    width: 100%;
+    height: 75px;
+    @include flexRow;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 3;
+    .brand {
+        a {
+            color: $light;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
+    .dark-theme {
+        .dark-theme-container {
+            height: 30px;
+            width: 65px;
+            border-radius: 40px;
+            background: $light;
+            position: relative;
+            @include flexRow;
+            justify-content: center;
+            cursor: pointer;
+            .dark-theme-icons {
+                padding: 0 4px;
+                width: 100%;
+                @include flexRow;
+                justify-content: space-between;
+                .dark-icon, .light-icon {
+                    width: 24px;
+                    height: 24px;
+                    @include flexRow;
+                    justify-content: center;
+                    border-radius: 50%;
+                    i {
+                        opacity: 0.2;
+                    }
+                }
+                .light-icon {
+                    box-shadow: 0 0 5px rgba($color: $dark, $alpha: 0.5);
+                    i {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    background: rgb(9,9,56);
+    background: linear-gradient(90deg, rgba(9,9,56,1) 0%, rgba(115,0,255,1) 100%);
+    @include flexRow;
+    justify-content: center;
+    p {
+        color: $light;
+    }
+}
+
+.landing {
+    .search-container {
+        padding: 24px 24px 0;
+        .back-home-btn {
+            color: $dark;
+            font-weight: bold;
+        }
+        .search-error {
+            color: red;
+            display: inline-block;
+            margin-top: 0.35rem;
+        }
+        .search-field {
+            width: 100%;
+            @include flexRow;
+            border: 1px solid rgba($color: $dark, $alpha: 0.75);
+            border-radius: 5px;
+            overflow: hidden;
+            input {
+                width: calc(100% - 80px);
+                height: 60px;
+                border: none;
+                padding: 0 16px;
+                font-size: 1.5rem;
+                outline: none;
+            }
+            button {
+                height: 60px;
+                width: 80px;
+                background-color: $light;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                i {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+    .search-results-section {
+        padding: 24px 24px 0;
+        display: none;
+    }
+}
+
+.movies-display-section {
+    padding: 24px;
+    @include flexRow;
+    align-items: flex-start;
+    justify-content: center;
+    // flex-wrap: wrap;
+    flex-flow: row wrap;
+    min-height: calc(100vh - 125px );
+    position: relative;
+    .movie-card {
+        border-radius: 5px;
+        width: calc(270px * 0.8);
+        height: calc(400px * 0.8 );
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease;
+        margin-right: 24px;
+        margin-bottom: 24px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hover-display-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 1) 100%);
+            color: $light;
+            opacity: 0;
+            transition: all 0.3s ease;
+            @include flexRow;
+            align-items: flex-end;
+            pointer-events: none;
+            .content {
+                padding: 1rem;
+                .lang {
+                    position: absolute;
+                    top: 0.5rem;
+                    right: 1rem;
+                    font-size: 8px;
+                    text-transform: uppercase;
+                    svg {
+                        path {
+                            fill: $light;
+                        }
+                    }
+                }
+            }
+            p {
+                font-size: 12px;
+                padding-bottom: 0.4rem;
+            }
+            .vote-section {
+                @include flexRow;
+                p {
+                    padding: 0;
+                }
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 0.4rem;
+                    path {
+                        fill: rgb(253, 173, 23);
+                    }
+                }
+            }
+        }
+        &:hover {
+            transform: scale(1.1);
+            z-index: 1;
+            .hover-display-section {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.movie-detail {
+    padding: 4rem;
+    min-height: calc(100vh - 125px );
+    @include flexRow;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    &:after {
+        content: '';
+        backdrop-filter: blur(2px);
+        background: linear-gradient(90deg, $light, rgba($color: $light, $alpha: 0.85));
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+    }
+    &-content {
+        @include flexRow;
+        box-shadow: 0 10px 15px rgba($color: $dark, $alpha: 0.25);
+        height: 400px;
+        background: $light;
+        color: $dark;
+        z-index: 2;
+        border-radius: 10px;
+        position: relative;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        path {
+            fill: $dark;
+        }
+    }
+    .rating-section {
+        svg {
+            path {
+                fill: $star-light;
+            }
+        }
+    }
+    .language {
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+    .rating-section, .language {
+        @include flexRow;
+    }
+    .left-container {
+        width: $imgWidth;
+        padding: 10px;
+        position: absolute;
+        top: -30px;
+        left: 30px;
+        box-shadow: 0 0 5px rgba($color: $dark, $alpha: 0.5);
+        border-radius: 10px;
+        @include flexRow;
+        justify-content: center;
+        background: linear-gradient(90deg, rgba(9,9,56,1) 0%, rgba(115,0,255,1) 100%);
+        box-shadow: 10px 10px 10px rgba($color: $dark, $alpha: 0.25);
+        img {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+    .right-container {
+        width: 100%;
+        padding: 2rem;
+        padding-left: $imgWidth;
+        margin-left: 62px;
+        .title {
+            margin-bottom: 0.5rem;
+        }
+        .overview {
+            margin: 1rem 0;
+            width: 600px;
+            line-height: 1.5;
+        }
+    }
+}
+
+// dark theme
+.dark-theme-settings {
+    color: $light;
+    header, footer {
+        background: rgb(28,28,28);
+        background: linear-gradient(90deg, rgba(28,28,28,1) 0%, rgba(54,54,54,1) 100%); 
+    }
+    header {
+        .dark-theme {
+            .dark-theme-container {
+                background: $dark-theme-bg;
+                .dark-theme-icons {
+                    .light-icon {
+                        box-shadow: none;
+                        i {
+                            opacity: 0.2;
+                        }
+                    }
+                    .dark-icon {
+                        box-shadow: 0 0 5px rgba($color: $dark, $alpha: 0.5);
+                        i {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .landing {
+        background: $dark-theme-bg;
+        .search-container {
+            .back-home-btn {
+                color: $light;
+            }
+            .search-field {
+                border-color: rgba($color: $light, $alpha: 0.5);
+                input, button {
+                    background: $dark-theme-bg;
+                    color: $light;
+                }
+            }
+        }
+    }
+    .movie-detail {
+        &:after {
+            background: linear-gradient(90deg, $dark, rgba($color: $dark-theme-bg, $alpha: 0.85));
+        }
+        &-content {
+            background: $dark-theme-bg;
+            color: $light;
+        }
+        .language {
+            svg {
+                path {
+                    fill: $light;
+                }
+            }
+        }
+    }
+}
+
+// responsive
+@media (max-width: '768px') {
+    .movies-display-section {
+        .movie-card {
+            width: calc(270px * 0.5);
+            height: calc(400px * 0.5);
+        }
+    }
+    .movie-detail {
+        overflow-y: visible;
+        &-content {
+            flex-direction: column;
+            height: auto;
+            min-width: 300px;
+            .left-container {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin: 24px 0;
+                width: calc(270px * 0.7);
+                height: calc(400px * 0.7);
+                padding: 5px;
+            }
+            .right-container {
+                margin-left: 0;
+                padding-left: 2rem;
+                .overview {
+                    width: auto;
+                }
+            }
+        }
+    }
+}
